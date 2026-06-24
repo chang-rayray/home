@@ -187,6 +187,36 @@
                     <li><strong>Address</strong> (06531) 서울시 서초구 잠원동 39-5 505호</li>
                 </ul>
             </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-container fade-up" style="transition-delay: 0.2s;">
+                <h3 class="title-md" style="margin-bottom: 24px; text-align: left;">프로젝트 문의하기</h3>
+                <form id="inquiry-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">이름 / 회사명 <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="홍길동 / 레이데이">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">연락처 <span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone" required placeholder="010-0000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">이메일</label>
+                            <input type="email" id="email" name="email" placeholder="example@email.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">문의 내용 <span class="required">*</span></label>
+                        <textarea id="message" name="message" required placeholder="원하시는 자동화 워크플로우나 마케팅 업무에 대해 자유롭게 적어주세요." rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large w-100" id="submit-btn">
+                        <span>문의 접수하기</span>
+                        <div class="spinner" style="display: none;"></div>
+                    </button>
+                    <div id="form-message" class="form-message"></div>
+                </form>
+            </div>
         </div>
     </section>
 
