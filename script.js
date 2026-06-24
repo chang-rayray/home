@@ -37,21 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Contact Form Submission
+    let submitted = false;
     const form = document.getElementById('inquiry-form');
+    const iframe = document.getElementById('hidden_iframe');
     const submitBtn = document.getElementById('submit-btn');
     const formMessage = document.getElementById('form-message');
     const btnText = submitBtn ? submitBtn.querySelector('span') : null;
     const spinner = submitBtn ? submitBtn.querySelector('.spinner') : null;
 
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            // Make.com Webhook URL (또는 Google Apps Script URL)
-            const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby_fL7OumELMLyRa4PKOUnLpOGfcB1szni4S-AcYjAD5xkwcczQmZ0jBvD4oYovnCop0g/exec'; 
-
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+    if (form && iframe) {
+        form.addEventListener('submit', () => {
+            submitted = true;
 
             // Loading state
             if(btnText) btnText.style.display = 'none';
@@ -59,34 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = true;
             formMessage.style.display = 'none';
             formMessage.className = 'form-message';
+        });
 
-            try {
-                // Send POST request using standard form URL encoding
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: new URLSearchParams(formData)
-                });
+        iframe.addEventListener('load', () => {
+            if (submitted) {
+                // Done loading
+                formMessage.textContent = '문의가 성공적으로 접수되었습니다. 빠르게 확인 후 연락드리겠습니다!';
+                formMessage.classList.add('success');
+                formMessage.style.display = 'block';
+                form.reset();
+                submitted = false;
 
-                // Google Apps Script redirect or success
-                if (response.ok || response.type === 'opaque') {
-                    formMessage.textContent = '문의가 성공적으로 접수되었습니다. 빠르게 확인 후 연락드리겠습니다!';
-                    formMessage.classList.add('success');
-                    form.reset();
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                // 테스트 모드(웹훅 URL이 기본값인 경우)일 때 임시로 성공 메시지 표시
-                if (WEBHOOK_URL.includes('YOUR_WEBHOOK_ID_HERE')) {
-                    formMessage.textContent = '[안내] 현재 테스트 모드입니다. (실제 Webhook URL을 script.js에 입력해주세요)';
-                    formMessage.classList.add('success');
-                } else {
-                    formMessage.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
-                    formMessage.classList.add('error');
-                }
-            } finally {
                 // Restore button state
                 if(btnText) btnText.style.display = 'block';
                 if(spinner) spinner.style.display = 'none';
