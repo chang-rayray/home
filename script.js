@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             // Make.com Webhook URL (또는 Google Apps Script URL)
-            const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwz3OVcnr9ZLatBsC4f20RN-99Ortvj5nQVk2b52_kNMRRNy9nwNTJRMuyzIm5IW0IikQ/exec'; 
+            const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby_fL7OumELMLyRa4PKOUnLpOGfcB1szni4S-AcYjAD5xkwcczQmZ0jBvD4oYovnCop0g/exec'; 
 
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Send POST request using standard form URL encoding
                 const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
+                    mode: 'no-cors',
                     body: new URLSearchParams(formData)
                 });
 
