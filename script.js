@@ -62,15 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
             formMessage.className = 'form-message';
 
             try {
-                // Send POST request
+                // Send POST request (text/plain to bypass CORS preflight for Google Apps Script)
                 const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'text/plain;charset=utf-8',
                     },
                     body: JSON.stringify(data)
                 });
 
+                // Google Apps Script usually returns 200 OK with the success JSON
                 if (response.ok || response.type === 'opaque') {
                     formMessage.textContent = '문의가 성공적으로 접수되었습니다. 빠르게 확인 후 연락드리겠습니다!';
                     formMessage.classList.add('success');
