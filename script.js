@@ -61,18 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
             formMessage.className = 'form-message';
 
             try {
-                // Send POST request (text/plain and no-cors to bypass CORS preflight for Google Apps Script)
+                // Send POST request using standard form URL encoding
                 const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
-                    },
-                    body: JSON.stringify(data)
+                    body: new URLSearchParams(formData)
                 });
 
-                // Google Apps Script with no-cors returns an opaque response
-                if (response.type === 'opaque' || response.ok) {
+                // Google Apps Script redirect or success
+                if (response.ok || response.type === 'opaque') {
                     formMessage.textContent = '문의가 성공적으로 접수되었습니다. 빠르게 확인 후 연락드리겠습니다!';
                     formMessage.classList.add('success');
                     form.reset();
