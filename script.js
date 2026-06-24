@@ -48,8 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             // Make.com Webhook URL (또는 Google Apps Script URL)
-            // 고객님께서 발급받은 URL을 아래에 넣어주세요!
-            const WEBHOOK_URL = 'https://hook.make.com/YOUR_WEBHOOK_ID_HERE'; 
+            const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyb4ApBBzItx5Ox8xrc1ZR83NX8cZyqUk9kbPwyIQoCNNbeFHAIt0EFNBGGXXoA7-YdHA/exec'; 
 
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
